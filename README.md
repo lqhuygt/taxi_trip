@@ -23,7 +23,7 @@
 - Create "features" column to train and clustering
 - Save data trained by model to PostgreSQL
 
-### 4. Analyst uber
+### 4. Analyst data
 **Using Tableau to analyze and visualize data**
 - Which clusters had the highest number of pickups?
 - Which hours of the day had the highest number of pickups?
