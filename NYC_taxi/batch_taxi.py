@@ -25,10 +25,12 @@ schema = StructType([
     StructField("tpep_dropoff_datetime",StringType(), True), 
     StructField("passenger_count", StringType(), True), 
     StructField("trip_distance", StringType(), True),
+    StructField("pickup_longitude", StringType(), True),
+    StructField("pickup_latitude", StringType(), True),
     StructField("RatecodeID", StringType(), True), 
     StructField("store_and_fwd_flag", StringType(), True), 
-    StructField("PULocationID", StringType(), True), 
-    StructField("DOLocationID", StringType(), True), 
+    StructField("dropoff_longitude", StringType(), True), 
+    StructField("dropoff_latitude", StringType(), True), 
     StructField("payment_type", StringType(), True), 
     StructField("fare_amount", StringType(), True), 
     StructField("extra", StringType(), True),  
@@ -36,16 +38,15 @@ schema = StructType([
     StructField("tip_amount", StringType(), True), 
     StructField("tolls_amount", StringType(), True), 
     StructField("improvement_surcharge", StringType(), True), 
-    StructField("total_amount", StringType(), True), 
-    StructField("congestion_surcharge", StringType(), True)
-  ])
+    StructField("total_amount", StringType(), True) 
+   ])
 
 # Parsing the messeage value into dataframe
 df_taxi_batch_cast = df_taxi_batch.select(from_json(col("value").cast("string"), schema).alias("value"))
 df_taxi_batch_casted = df_taxi_batch_cast.selectExpr("value.VendorID", "value.tpep_pickup_datetime", "value.tpep_dropoff_datetime", 
-        "value.passenger_count", "value.trip_distance", "value.RatecodeID", "value.store_and_fwd_flag", "value.PULocationID", "value.DOLocationID",
-         "value.payment_type", "value.fare_amount", "value.extra", "value.mta_tax", "value.tip_amount", "value.tolls_amount", 
-         "value.improvement_surcharge", "value.total_amount", "value.congestion_surcharge")
+        "value.passenger_count", "value.trip_distance", "value.pickup_longitude", "value.pickup_latitude", "value.RatecodeID", "value.store_and_fwd_flag", 
+        "value.dropoff_longitude", "value.dropoff_latitude", "value.payment_type", "value.fare_amount", "value.extra", "value.mta_tax", "value.tip_amount", "value.tolls_amount", 
+         "value.improvement_surcharge", "value.total_amount")
 df_taxi_batch_casted.printSchema()
 df_taxi_batch_casted.show(5)
 

@@ -20,9 +20,9 @@ class  MyHandler(FileSystemEventHandler):
         producer = KafkaProducer(bootstrap_servers=BOOTSTRAP_SERVER,value_serializer=lambda x:dumps(x).encode('utf-8'))
 
         with open(event.src_path,  encoding='utf-8', errors='ignore') as file:
-            column = ["VendorID", "tpep_pickup_datetime", "tpep_dropoff_datetime", "passenger_count", "trip_distance", "RatecodeID", "store_and_fwd_flag",
-                    "PULocationID", "DOLocationID", "payment_type", "fare_amount", "extra", "mta_tax", "tip_amount", "tolls_amount", "improvement_surcharge",
-                    "total_amount", "congestion_surcharge"]
+            column = ["VendorID", "tpep_pickup_datetime", "tpep_dropoff_datetime", "passenger_count", "trip_distance", "pickup_longitude", 
+                            "pickup_latitude", "RatecodeID", "store_and_fwd_flag", "dropoff_longitude", "dropoff_latitude", "payment_type", "fare_amount",
+                            "extra", "mta_tax", "tip_amount", "tolls_amount", "improvement_surcharge", "total_amount"]
             data = csv.DictReader(file, delimiter=",", fieldnames=column)
             for row in data:
                 producer.send(TOPCIC_NAME,row)
